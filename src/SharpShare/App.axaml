@@ -1,0 +1,57 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SharpShare.App"
+             x:CompileBindings="True">
+    <Application.Styles>
+        <FluentTheme />
+        <!-- Lucide icons are stroke-based; Path with Stroke renders them correctly -->
+        <Style Selector="Path.lucide">
+            <Setter Property="Stroke" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="StrokeThickness" Value="1.5" />
+            <Setter Property="StrokeLineCap" Value="Round" />
+            <Setter Property="StrokeJoin" Value="Round" />
+            <Setter Property="Stretch" Value="Uniform" />
+        </Style>
+    </Application.Styles>
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://SharpShare/Assets/Icons.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key='Light'>
+                    <SolidColorBrush x:Key="BackgroundPrimaryBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="BackgroundSecondaryBrush" Color="#F2F2F7" />
+                    <SolidColorBrush x:Key="BackgroundTertiaryBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#000000" />
+                    <SolidColorBrush x:Key="TextSecondaryBrush" Color="#6C6C70" />
+                    <SolidColorBrush x:Key="AccentBrush" Color="#007AFF" />
+                    <SolidColorBrush x:Key="AccentHoverBrush" Color="#0066D6" />
+                    <SolidColorBrush x:Key="BorderBrush" Color="#D1D1D6" />
+                    <SolidColorBrush x:Key="SuccessBrush" Color="#34C759" />
+                    <SolidColorBrush x:Key="WarningBrush" Color="#FF9500" />
+                    <SolidColorBrush x:Key="ErrorBrush" Color="#FF3B30" />
+                    <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="ProgressTrackBrush" Color="#E5E5EA" />
+                    <SolidColorBrush x:Key="ProgressFillBrush" Color="#007AFF" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key='Dark'>
+                    <SolidColorBrush x:Key="BackgroundPrimaryBrush" Color="#1C1C1E" />
+                    <SolidColorBrush x:Key="BackgroundSecondaryBrush" Color="#2C2C2E" />
+                    <SolidColorBrush x:Key="BackgroundTertiaryBrush" Color="#3A3A3C" />
+                    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="TextSecondaryBrush" Color="#8E8E93" />
+                    <SolidColorBrush x:Key="AccentBrush" Color="#0A84FF" />
+                    <SolidColorBrush x:Key="AccentHoverBrush" Color="#409CFF" />
+                    <SolidColorBrush x:Key="BorderBrush" Color="#48484A" />
+                    <SolidColorBrush x:Key="SuccessBrush" Color="#30D158" />
+                    <SolidColorBrush x:Key="WarningBrush" Color="#FF9F0A" />
+                    <SolidColorBrush x:Key="ErrorBrush" Color="#FF453A" />
+                    <SolidColorBrush x:Key="SurfaceBrush" Color="#2C2C2E" />
+                    <SolidColorBrush x:Key="ProgressTrackBrush" Color="#48484A" />
+                    <SolidColorBrush x:Key="ProgressFillBrush" Color="#0A84FF" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

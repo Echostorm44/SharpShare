@@ -1,0 +1,371 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SharpShare.ViewModels"
+        xmlns:views="using:SharpShare.Views"
+        x:Class="SharpShare.Views.MainWindow"
+        x:CompileBindings="True"
+        x:DataType="vm:AppState"
+        Title="SharpShare"
+        Width="950" Height="700"
+        MinWidth="750" MinHeight="550"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource BackgroundPrimaryBrush}">
+
+    <Window.Styles>
+        <!-- Accent button style -->
+        <Style Selector="Button.accent">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="20,10" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}" />
+        </Style>
+        <!-- Secondary button -->
+        <Style Selector="Button.secondary">
+            <Setter Property="Background" Value="{DynamicResource BackgroundSecondaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="16,8" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+        <!-- Card panel -->
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="Padding" Value="24" />
+        </Style>
+        <!-- Section header -->
+        <Style Selector="TextBlock.sectionHeader">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+        </Style>
+        <!-- Rounded ListBox borders -->
+        <Style Selector="ListBox">
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+        <!-- Rounded TextBox -->
+        <Style Selector="TextBox">
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+        <!-- Rounded NumericUpDown -->
+        <Style Selector="NumericUpDown">
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+        <!-- Rounded ProgressBar -->
+        <Style Selector="ProgressBar">
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+    </Window.Styles>
+
+    <DockPanel>
+        <!-- Top Menu Bar -->
+        <Menu DockPanel.Dock="Top" Background="{DynamicResource BackgroundSecondaryBrush}">
+            <MenuItem Header="File">
+                <MenuItem Header="Settings" x:Name="MenuSettings" />
+                <Separator />
+                <MenuItem Header="Exit" x:Name="MenuExit" />
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Transfer History" x:Name="MenuHistory" />
+                <Separator />
+                <MenuItem x:Name="MenuThemeToggle" />
+            </MenuItem>
+        </Menu>
+
+        <!-- Main Content Area -->
+        <Panel Background="{DynamicResource BackgroundPrimaryBrush}">
+
+            <!-- Screen 1: Setup -->
+            <Panel x:Name="SetupScreen" IsVisible="True">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Spacing="24" MaxWidth="420">
+                    <!-- App title -->
+                    <StackPanel HorizontalAlignment="Center" Spacing="4">
+                        <TextBlock Text="SharpShare" FontSize="28" FontWeight="SemiBold"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                        <TextBlock Text="Simple peer-to-peer file sharing"
+                                   FontSize="14" HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" />
+                    </StackPanel>
+
+                    <!-- Shared folder card -->
+                    <Border Classes="card">
+                        <StackPanel Spacing="12">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Path Classes="lucide" Data="{StaticResource FolderIcon}" Width="18" Height="18" />
+                                <TextBlock Text="Shared Folder" FontWeight="Medium" FontSize="14"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </StackPanel>
+                            <TextBlock x:Name="SharedFolderText" FontSize="13"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"
+                                       TextWrapping="Wrap" Text="No folder selected" />
+                            <Button x:Name="BrowseFolderButton" Classes="secondary"
+                                    HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Path Classes="lucide" Data="{StaticResource FolderOpenIcon}" Width="14" Height="14" />
+                                    <TextBlock Text="Browse..." />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Host / Join buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16">
+                        <Button x:Name="HostButton" Classes="accent"
+                                Width="180" HorizontalContentAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Path Classes="lucide" Data="{StaticResource PlayIcon}" Width="14" Height="14"
+                                      Stroke="White" />
+                                <TextBlock Text="Host Session" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="JoinButton" Classes="accent"
+                                Width="180" HorizontalContentAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Path Classes="lucide" Data="{StaticResource LogInIcon}" Width="14" Height="14"
+                                      Stroke="White" />
+                                <TextBlock Text="Join Session" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Panel>
+
+            <!-- Screen 2: Waiting for Connection (Host) -->
+            <Panel x:Name="WaitingScreen" IsVisible="False">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Spacing="20" MaxWidth="440">
+                    <TextBlock Text="Waiting for connection..."
+                               FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                    <Border Classes="card">
+                        <StackPanel Spacing="16">
+                            <!-- Address -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Classes="sectionHeader" Text="YOUR ADDRESS" />
+                                <DockPanel>
+                                    <Button x:Name="CopyAddressButton" DockPanel.Dock="Right"
+                                            Classes="secondary" Padding="8,6" Margin="8,0,0,0"
+                                            ToolTip.Tip="Copy to clipboard">
+                                        <Path Classes="lucide" Data="{StaticResource CopyIcon}" Width="14" Height="14" />
+                                    </Button>
+                                    <TextBlock x:Name="AddressText" FontSize="16" FontWeight="Medium"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                                </DockPanel>
+                            </StackPanel>
+
+                            <!-- Passphrase -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Classes="sectionHeader" Text="PASSPHRASE" />
+                                <DockPanel>
+                                    <Button x:Name="CopyPassphraseButton" DockPanel.Dock="Right"
+                                            Classes="secondary" Padding="8,6" Margin="8,0,0,0"
+                                            ToolTip.Tip="Copy to clipboard">
+                                        <Path Classes="lucide" Data="{StaticResource CopyIcon}" Width="14" Height="14" />
+                                    </Button>
+                                    <TextBlock x:Name="PassphraseText" FontSize="16" FontWeight="Medium"
+                                               FontFamily="Consolas,monospace"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource AccentBrush}" />
+                                </DockPanel>
+                            </StackPanel>
+
+                            <!-- UPnP Status -->
+                            <DockPanel>
+                                <TextBlock x:Name="UpnpStatusIcon" FontSize="14"
+                                           DockPanel.Dock="Left" Margin="0,1,6,0"
+                                           VerticalAlignment="Top" />
+                                <TextBlock x:Name="UpnpStatusText" FontSize="13"
+                                           TextWrapping="Wrap"
+                                           Foreground="{DynamicResource TextSecondaryBrush}" />
+                            </DockPanel>
+
+                            <TextBlock Text="Tell the other person both values above to connect."
+                                       FontSize="13" TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </StackPanel>
+                    </Border>
+
+                    <Button x:Name="CancelHostButton" Classes="secondary"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center" Width="140">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Path Classes="lucide" Data="{StaticResource XIcon}" Width="14" Height="14" />
+                            <TextBlock Text="Cancel" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Panel>
+
+            <!-- Screen 3: Connected -->
+            <DockPanel x:Name="ConnectedScreen" IsVisible="False">
+                <!-- Connection status bar -->
+                <Border DockPanel.Dock="Top" Background="{DynamicResource BackgroundSecondaryBrush}"
+                        Padding="16,8">
+                    <DockPanel>
+                        <Button x:Name="DisconnectButton" DockPanel.Dock="Right"
+                                Classes="secondary">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Path Classes="lucide" Data="{StaticResource PowerIcon}" Width="14" Height="14" />
+                                <TextBlock Text="Disconnect" />
+                            </StackPanel>
+                        </Button>
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <Path Classes="lucide" Data="{StaticResource LinkIcon}" Width="16" Height="16"
+                                  Stroke="{DynamicResource SuccessBrush}" />
+                            <TextBlock x:Name="ConnectedToText" FontSize="13" FontWeight="Medium"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock x:Name="LatencyText" FontSize="11" Margin="12,0,0,0"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+
+                <!-- Main content split: file browser + transfers -->
+                <Grid RowDefinitions="*,Auto,*">
+                    <!-- File Browser Panel -->
+                    <Border Grid.Row="0" Margin="16,12,16,4">
+                        <DockPanel>
+                            <DockPanel DockPanel.Dock="Top" Margin="0,0,0,8">
+                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+                                    <Button x:Name="RefreshButton" Classes="secondary" Padding="8,6"
+                                            ToolTip.Tip="Refresh file list">
+                                        <Path Classes="lucide" Data="{StaticResource RefreshIcon}" Width="14" Height="14" />
+                                    </Button>
+                                    <Button x:Name="DownloadButton" Classes="accent" Padding="12,6">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Path Classes="lucide" Data="{StaticResource DownloadIcon}"
+                                                  Width="14" Height="14" Stroke="White" />
+                                            <TextBlock Text="Download Selected" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <CheckBox x:Name="SelectAllCheckbox" IsChecked="True"
+                                              VerticalAlignment="Center" />
+                                    <TextBlock Classes="sectionHeader" Text="THEIR FILES"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DockPanel>
+
+                            <!-- File list -->
+                            <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                                    CornerRadius="10">
+                                <ListBox x:Name="FileList"
+                                         Background="{DynamicResource SurfaceBrush}"
+                                         SelectionMode="Multiple">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:RemoteFileItem">
+                                            <Grid ColumnDefinitions="Auto,*,Auto" Height="32">
+                                                <CheckBox Grid.Column="0"
+                                                          IsChecked="{Binding IsSelected}"
+                                                          Margin="0,0,8,0" VerticalAlignment="Center" />
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                            Spacing="6" VerticalAlignment="Center">
+                                                    <Path Classes="lucide" Width="14" Height="14"
+                                                          Data="{Binding IsDirectory, Converter={x:Static views:MainWindow.FileIconConverter}}" />
+                                                    <TextBlock Text="{Binding DisplayPath}" FontSize="13"
+                                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="2" Text="{Binding FormattedSize}"
+                                                           FontSize="12" Margin="16,0"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource TextSecondaryBrush}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- Splitter -->
+                    <GridSplitter Grid.Row="1" Height="6" Background="Transparent"
+                                  HorizontalAlignment="Stretch" />
+
+                    <!-- Transfer Panel -->
+                    <Border Grid.Row="2" Margin="16,4,16,12">
+                        <DockPanel>
+                            <DockPanel DockPanel.Dock="Top" Margin="0,0,0,8">
+                                <Button x:Name="ClearCompletedButton" DockPanel.Dock="Right"
+                                        Classes="secondary" Padding="10,4" FontSize="12">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <Path Classes="lucide" Data="{StaticResource TrashIcon}" Width="12" Height="12" />
+                                        <TextBlock Text="Clear Completed" />
+                                    </StackPanel>
+                                </Button>
+                                <TextBlock Classes="sectionHeader" Text="TRANSFERS"
+                                           VerticalAlignment="Center" />
+                            </DockPanel>
+
+                            <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                                    CornerRadius="10">
+                                <ListBox x:Name="TransferList"
+                                         Background="{DynamicResource SurfaceBrush}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:TransferItem">
+                                            <Grid RowDefinitions="Auto,Auto" Margin="4,6">
+                                                <DockPanel Grid.Row="0">
+                                                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                                                                Spacing="6" VerticalAlignment="Center">
+                                                        <Button Classes="secondary" Padding="4" CornerRadius="6"
+                                                                IsVisible="{Binding IsCancellable}"
+                                                                Tag="{Binding}"
+                                                                Click="OnCancelTransferItem"
+                                                                ToolTip.Tip="Cancel transfer">
+                                                            <Path Classes="lucide" Data="{StaticResource XIcon}"
+                                                                  Width="10" Height="10" />
+                                                        </Button>
+                                                        <TextBlock Text="{Binding StatusText}"
+                                                                   FontSize="12"
+                                                                   Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                                        <Path Classes="lucide" Width="12" Height="12"
+                                                              Data="{Binding Direction, Converter={x:Static views:MainWindow.TransferIconConverter}}" />
+                                                        <TextBlock Text="{Binding FileName}" FontSize="13"
+                                                                   FontWeight="Medium"
+                                                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                                                        <TextBlock Text="{Binding FormattedTotalSize}"
+                                                                   FontSize="12"
+                                                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                                                   Margin="4,0,0,0" />
+                                                    </StackPanel>
+                                                </DockPanel>
+                                                <DockPanel Grid.Row="1" Margin="0,4,0,0">
+                                                    <TextBlock DockPanel.Dock="Right"
+                                                               Margin="8,0,0,0" FontSize="11"
+                                                               Foreground="{DynamicResource TextSecondaryBrush}">
+                                                        <Run Text="{Binding SpeedText}" />
+                                                        <Run Text="{Binding EtaText}" />
+                                                    </TextBlock>
+                                                    <ProgressBar Minimum="0" Maximum="100"
+                                                                 Value="{Binding ProgressPercent}"
+                                                                 Height="4" CornerRadius="2"
+                                                                 Foreground="{DynamicResource ProgressFillBrush}"
+                                                                 Background="{DynamicResource ProgressTrackBrush}" />
+                                                </DockPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </DockPanel>
+
+        </Panel>
+    </DockPanel>
+</Window>

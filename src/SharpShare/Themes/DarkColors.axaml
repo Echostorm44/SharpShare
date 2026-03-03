@@ -1,0 +1,32 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="BackgroundPrimary">#1C1C1E</Color>
+    <Color x:Key="BackgroundSecondary">#2C2C2E</Color>
+    <Color x:Key="BackgroundTertiary">#3A3A3C</Color>
+    <Color x:Key="TextPrimary">#FFFFFF</Color>
+    <Color x:Key="TextSecondary">#8E8E93</Color>
+    <Color x:Key="AccentColor">#0A84FF</Color>
+    <Color x:Key="AccentHover">#409CFF</Color>
+    <Color x:Key="BorderColor">#48484A</Color>
+    <Color x:Key="SuccessColor">#30D158</Color>
+    <Color x:Key="WarningColor">#FF9F0A</Color>
+    <Color x:Key="ErrorColor">#FF453A</Color>
+    <Color x:Key="SurfaceColor">#2C2C2E</Color>
+    <Color x:Key="ProgressBarTrack">#48484A</Color>
+    <Color x:Key="ProgressBarFill">#0A84FF</Color>
+
+    <SolidColorBrush x:Key="BackgroundPrimaryBrush" Color="{StaticResource BackgroundPrimary}" />
+    <SolidColorBrush x:Key="BackgroundSecondaryBrush" Color="{StaticResource BackgroundSecondary}" />
+    <SolidColorBrush x:Key="BackgroundTertiaryBrush" Color="{StaticResource BackgroundTertiary}" />
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHover}" />
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
+    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
+    <SolidColorBrush x:Key="ProgressTrackBrush" Color="{StaticResource ProgressBarTrack}" />
+    <SolidColorBrush x:Key="ProgressFillBrush" Color="{StaticResource ProgressBarFill}" />
+</ResourceDictionary>

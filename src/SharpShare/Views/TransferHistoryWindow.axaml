@@ -1,0 +1,75 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:storage="using:SharpShare.Storage"
+        x:Class="SharpShare.Views.TransferHistoryWindow"
+        x:CompileBindings="True"
+        Title="Transfer History"
+        Width="700" Height="500"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource BackgroundPrimaryBrush}">
+
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+    </Window.Styles>
+
+    <DockPanel Margin="16">
+        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+            <Button x:Name="ClearButton" DockPanel.Dock="Right" Padding="12,6">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <Path Classes="lucide" Data="{StaticResource TrashIcon}" Width="13" Height="13"
+                          Stroke="{DynamicResource TextPrimaryBrush}" />
+                    <TextBlock Text="Clear History" />
+                </StackPanel>
+            </Button>
+            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                <Path Classes="lucide" Data="{StaticResource HistoryIcon}" Width="20" Height="20"
+                      Stroke="{DynamicResource TextPrimaryBrush}" />
+                <TextBlock Text="Transfer History" FontSize="18" FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextPrimaryBrush}" />
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Column headers -->
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="140,*,70,80,70" Margin="8,0,8,4">
+            <TextBlock Grid.Column="0" Text="Time" FontSize="11" FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextSecondaryBrush}" />
+            <TextBlock Grid.Column="1" Text="File" FontSize="11" FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextSecondaryBrush}" />
+            <TextBlock Grid.Column="2" Text="Dir" FontSize="11" FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextSecondaryBrush}" />
+            <TextBlock Grid.Column="3" Text="Size" FontSize="11" FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextSecondaryBrush}" />
+            <TextBlock Grid.Column="4" Text="Status" FontSize="11" FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextSecondaryBrush}" />
+        </Grid>
+
+        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="10">
+            <ListBox x:Name="HistoryList"
+                     Background="{DynamicResource SurfaceBrush}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="storage:TransferHistoryEntry">
+                        <Grid ColumnDefinitions="140,*,70,80,70" Height="28">
+                            <TextBlock Grid.Column="0" Text="{Binding TimestampUtc, StringFormat={}{0:yyyy-MM-dd HH:mm}}"
+                                       FontSize="12" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                            <TextBlock Grid.Column="1" Text="{Binding FileName}" FontSize="12"
+                                       VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock Grid.Column="2" Text="{Binding Direction}" FontSize="12"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                            <TextBlock Grid.Column="3" Text="{Binding FileSizeBytes}" FontSize="12"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                            <TextBlock Grid.Column="4" Text="{Binding Status}" FontSize="12"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+    </DockPanel>
+</Window>

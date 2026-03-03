@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="global.json" />
+    <File Path="icon.ico" />
+    <File Path="icon.png" />
+    <File Path="LICENSE.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/SharpShare/SharpShare.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SharpShare.Tests/SharpShare.Tests.csproj" />
+  </Folder>
+</Solution>
